@@ -15,23 +15,27 @@ public class RomanFormatter {
   }
 
   public String format(Integer no) {
+    String val = apply(no);
+
+    return val;
+  }
+
+  public String apply(Integer no) {
     if (no <= 0) return "";
     if (this.numerals.containsKey(no)) {
       return this.numerals.get(no);
     } else {
-      int less = this.numerals.floorKey(no);
-      int left = no - less;
-      int higher = this.numerals.higherKey(no);
-      int right = higher - no;
+      int small = this.numerals.floorKey(no);
+      int left = no - small;
+      int big = this.numerals.higherKey(no);
+      int right = big - no;
 
-      //on left
+      //contains
       if (this.numerals.containsKey(right)) {
-        return format(right) + this.numerals.get(higher);
+        return apply(right) + this.numerals.get(big);
       } else {
-        // on right
-        return this.numerals.get(less) + format(left);
+        return this.numerals.get(small) + apply(left);
       }
-
     }
   }
 
